@@ -82,3 +82,26 @@ export const loginAdmin = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// @desc Get current logged-in admin
+// @route GET /api/auth/me
+// @access Private
+export const getAdminProfile = async (req, res) => {
+  try {
+    if (!req.admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    res.json({
+      _id: req.admin._id,
+      firstName: req.admin.firstName,
+      lastName: req.admin.lastName,
+      email: req.admin.email,
+      businessName: req.admin.businessName,
+      createdAt: req.admin.createdAt,
+    });
+  } catch (error) {
+    console.error("Error fetching admin profile:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
