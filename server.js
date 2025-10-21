@@ -5,6 +5,9 @@ import connectDB from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import storeRoutes from "./routes/storeRoutes.js";
+import deviceRoutes from "./routes/deviceRoutes.js";
+import sellingDeviceRoutes from "./routes/sellingDeviceRoutes.js";
+import repairDeviceRoutes from "./routes/repairDeviceRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -15,6 +18,9 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/store", storeRoutes);
+app.use("/api/devices", deviceRoutes);
+app.use("/api/selling-devices", sellingDeviceRoutes);
+app.use("/api/repair-devices", repairDeviceRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
