@@ -48,3 +48,38 @@ export const getRepairDevices = async (req, res) => {
       .json({ message: "Server error while fetching repair devices" });
   }
 };
+
+// @desc Update repair device (issues or prices)
+// @route PUT /api/repair-devices/:id
+export const updateRepairDevice = async (req, res) => {
+  try {
+    const repairDevice = await RepairDevice.findOneAndUpdate(
+      { _id: req.params.id, storeId: req.admin._id },
+      req.body,
+      { new: true }
+    );
+    if (!repairDevice)
+      return res.status(404).json({ message: "Repair device not found" });
+    res.json(repairDevice);
+  } catch (err) {
+    console.error("Update repair device error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// @desc Delete repair device
+// @route DELETE /api/repair-devices/:id
+export const deleteRepairDevice = async (req, res) => {
+  try {
+    const repairDevice = await RepairDevice.findOneAndDelete({
+      _id: req.params.id,
+      storeId: req.admin._id,
+    });
+    if (!repairDevice)
+      return res.status(404).json({ message: "Repair device not found" });
+    res.json({ message: "Repair device deleted successfully" });
+  } catch (err) {
+    console.error("Delete repair device error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

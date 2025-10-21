@@ -51,3 +51,38 @@ export const getSellingDevices = async (req, res) => {
       .json({ message: "Server error while fetching selling devices" });
   }
 };
+
+// @desc Update selling device (e.g., price or status)
+// @route PUT /api/selling-devices/:id
+export const updateSellingDevice = async (req, res) => {
+  try {
+    const sellingDevice = await SellingDevice.findOneAndUpdate(
+      { _id: req.params.id, storeId: req.admin._id },
+      req.body,
+      { new: true }
+    );
+    if (!sellingDevice)
+      return res.status(404).json({ message: "Selling device not found" });
+    res.json(sellingDevice);
+  } catch (err) {
+    console.error("Update selling device error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// @desc Delete selling device
+// @route DELETE /api/selling-devices/:id
+export const deleteSellingDevice = async (req, res) => {
+  try {
+    const sellingDevice = await SellingDevice.findOneAndDelete({
+      _id: req.params.id,
+      storeId: req.admin._id,
+    });
+    if (!sellingDevice)
+      return res.status(404).json({ message: "Selling device not found" });
+    res.json({ message: "Selling device deleted successfully" });
+  } catch (err) {
+    console.error("Delete selling device error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};

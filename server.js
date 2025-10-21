@@ -8,6 +8,8 @@ import storeRoutes from "./routes/storeRoutes.js";
 import deviceRoutes from "./routes/deviceRoutes.js";
 import sellingDeviceRoutes from "./routes/sellingDeviceRoutes.js";
 import repairDeviceRoutes from "./routes/repairDeviceRoutes.js";
+import accessoryRoutes from "./routes/accessoryRoutes.js";
+import accessoryProductRoutes from "./routes/accessoryProductRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -21,6 +23,8 @@ app.use("/api/store", storeRoutes);
 app.use("/api/devices", deviceRoutes);
 app.use("/api/selling-devices", sellingDeviceRoutes);
 app.use("/api/repair-devices", repairDeviceRoutes);
+app.use("/api/accessories", accessoryRoutes);
+app.use("/api/accessory-products", accessoryProductRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
