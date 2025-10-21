@@ -1,12 +1,27 @@
 import Device from "../models/device.js";
 
 // Create new device (for either selling or repair type)
+// Create new device (for either selling or repair type)
 export const createDevice = async (req, res) => {
   try {
-    const { brand, model, type } = req.body;
-    const existing = await Device.findOne({ storeId: req.admin._id, brand, model, type });
-    if (existing) return res.status(400).json({ message: "Device already exists" });
+    let { brand, model, type } = req.body;
 
+    brand = brand.trim().toLowerCase();
+    model = model.trim().toLowerCase();
+
+    // Check if a device with the same normalized values already exists
+    const existing = await Device.findOne({
+      storeId: req.admin._id,
+      brand,
+      model,
+      type,
+    });
+
+    if (existing) {
+      return res.status(400).json({ message: "Device already exists" });
+    }
+
+    // Save with normalized lowercase brand/model for consistency
     const device = await Device.create({
       storeId: req.admin._id,
       brand,
@@ -20,6 +35,7 @@ export const createDevice = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Get all devices for this store
 export const getDevices = async (req, res) => {

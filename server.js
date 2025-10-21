@@ -10,6 +10,7 @@ import sellingDeviceRoutes from "./routes/sellingDeviceRoutes.js";
 import repairDeviceRoutes from "./routes/repairDeviceRoutes.js";
 import accessoryRoutes from "./routes/accessoryRoutes.js";
 import accessoryProductRoutes from "./routes/accessoryProductRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,7 @@ app.use("/api/selling-devices", sellingDeviceRoutes);
 app.use("/api/repair-devices", repairDeviceRoutes);
 app.use("/api/accessories", accessoryRoutes);
 app.use("/api/accessory-products", accessoryProductRoutes);
+app.use("/api/customers", customerRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
